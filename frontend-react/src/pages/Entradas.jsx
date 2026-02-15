@@ -11,14 +11,12 @@ export default function Entradas() {
 
   const [foto, setFoto] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [mostrarIrregular, setMostrarIrregular] = useState(false);
 
   const [form, setForm] = useState({
     placa: "",
     id_ra: "",
     residuos: [],
-    irregularidade: false,
-    id_irregularidade: ""
+    irregularidade: false
   });
 
   useEffect(() => {
@@ -59,7 +57,6 @@ export default function Entradas() {
   const handleIrregularidade = (e) => {
     const checked = e.target.checked;
     setForm({ ...form, irregularidade: checked });
-    setMostrarIrregular(checked);
   };
 
   // ===== SUBMIT =====
@@ -70,7 +67,6 @@ export default function Entradas() {
     data.append("placa", form.placa);
     data.append("id_ra", form.id_ra);
     data.append("irregularidade", form.irregularidade);
-    data.append("id_irregularidade", form.id_irregularidade);
 
     form.residuos.forEach(r => data.append("residuos[]", r));
 
@@ -144,26 +140,6 @@ export default function Entradas() {
                 </label>
               </div>
             </div>
-
-            {/* LISTA DE IRREGULARIDADES */}
-            {mostrarIrregular && (
-              <div className="form-group">
-                <label>Tipo de Irregularidade</label>
-                <select
-                  value={form.id_irregularidade}
-                  onChange={e =>
-                    setForm({ ...form, id_irregularidade: e.target.value })
-                  }
-                >
-                  <option value="">Selecione</option>
-                  {irregularidades.map(i => (
-                    <option key={i.id_irregularidade} value={i.id_irregularidade}>
-                      {i.nome_irregularidade}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
 
             {/* FOTO */}
             <div className="foto-area">
